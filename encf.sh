@@ -44,7 +44,7 @@ fi
 function encrypt() {
     local input=$1
     local output="${input}.${EXTENSION}"
-    openssl aes-256-cbc -a -e -salt -in "$input" -out "$output"
+    openssl aes-256-cbc -a -e -salt -in "$input" -out "$output" || return 1
     echo "Encrypted file $output"
     rm "$input"
 }
@@ -52,7 +52,7 @@ function encrypt() {
 function decrypt() {
     local input=$1
     local output=${input%".$EXTENSION"}
-    openssl aes-256-cbc -a -d -salt -in "$input" -out "$output"
+    openssl aes-256-cbc -a -d -salt -in "$input" -out "$output" || return 1
     echo "Decrypted file $output"
     rm "$input"
 }
